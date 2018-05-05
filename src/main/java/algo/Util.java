@@ -10,7 +10,7 @@ public class Util {
     public static Options parseArguments(final String[] args) {
         // program type
         Option programType = new Option("p", "program", true, "program type");
-        programType.setRequired(true);
+        programType.setRequired(false);
 
         // dataset file path
         Option datasetFile = new Option("d", "dataset", true, "dataset file path");
@@ -24,9 +24,19 @@ public class Util {
     }
 
     public static void validateArguments(final String programType, final String datasetFile) {
+      if (programType == null && datasetFile == null) {
+        // show info
+        System.out.println("Usage:");
+        System.out.println("\t-p [p/t] [predict/tra]");
+        System.out.println("\t-d ..pathToDataset/datasetFile (if tra)");
+        
+        System.exit(0);
+
+      }
        if (programType.equals("t") && datasetFile == null) {
            System.out.println("Error, no datasetFile path");
            System.exit(1);
        }
+      
     }
 }
