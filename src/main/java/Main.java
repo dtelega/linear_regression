@@ -22,13 +22,13 @@ public class Main {
     private static float theta0 = 0;
     private static float theta1 = 0;
 
-    private static float estimatePrice(int mileage) {
-        return theta0 + (theta1 * mileage);
+    private static float estimatePrice(int mileage, float tmpTheta0, float tmpTheta1) {
+        return tmpTheta0 + (tmpTheta1 * mileage);
     }
 
     public static void main(String[] args) {
         
-        File thetasData = new File("thetasData.txt");
+        File thetasData = new File(".thetasData.txt");
         
         if (thetasData.exists()) {
             try {
@@ -78,7 +78,7 @@ public class Main {
             Scanner scan = new Scanner(System.in);
             String s = scan.nextLine();
             try {
-                System.out.println(estimatePrice(Integer.parseInt(s)));
+                System.out.println(estimatePrice(Integer.parseInt(s), theta0, theta1));
             } catch (NumberFormatException e) {
                 System.out.println("Bad value");
                 System.exit(1);
