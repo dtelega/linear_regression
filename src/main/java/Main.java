@@ -44,6 +44,12 @@ public class Main {
         int tmp1;
         int i = 0;
 
+
+/*
+need to div long int to double, because overflow
+
+
+*/
         int m = findLengthFile(datasetPath);
         int x [] = new int[m];
         int y [] = new int[m];
