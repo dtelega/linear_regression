@@ -1,6 +1,5 @@
 import org.apache.commons.cli.*;
-
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
@@ -14,9 +13,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.io.*;
 import java.util.Scanner;
-import java.io.BufferedReader;
+import java.lang.Object;
+
+// import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 import static algo.Util.*;
 
@@ -61,24 +61,53 @@ public class Main {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+   
+        int xSum = 0;
+        int ySum = 0;
+
+        long xSquared = 0;
+        int xY = 0;
+        for (int j = 0; j < i; j++) {
+            xSum += x[j];
+            ySum += y[j];
+            xSquared += x[j] * x[j];
+            System.out.println(xSquared);
+            xY += x[j] * y[j];
+        }
+
+        long numerator = (i * xY - xSum * ySum);
+        System.out.println(" " + (i * xY - xSum * ySum));
+        System.out.println(i+" "+xY+" "+xSum+" "+ySum);
+        long slope = (i * xY - xSum * ySum) / (i * xSquared - xSum * xSum);
+        System.out.println((i * xSquared - xSum * xSum));
+        long intercept = (1 / i) * ySum - slope * (1 / i) * xSum;
+
+       // theta0 = slope;
+       // theta1 = intercept;
+
+        // SimpleRegression regression = new SimpleRegression();
+        // for (int j = 0; j < i; j++) {
+        //     regression.addData(x[j], y[j]);
+        // }
+
 /*
         // check x y
         for (int j = 0; j < i; j++)
             System.out.println(x[j]+","+y[j]);
         // end
 */
-        for (int q = 200; q>0; q--) {
-            tmp0 = 0;
-            tmp1 = 0;
-            for (int j = 0; j < m; j++) {
-                tmp0 += (estimatePrice(x[j], theta0, theta1) - y[j]);
-                tmp1 += (estimatePrice(x[j], theta0, theta1) - y[j]) * x[j];
-                //System.out.println("tmp = "+tmp0+"   "+tmp1);
-            }
-            theta0 -= (tmp0 * 3 / 10) / m;
-            theta1 -= (tmp1 * 3 / 10) / m;
-            System.out.println(theta0+"    "+theta1);
-        }
+        // for (int q = 1; q>0; q--) {
+        //     tmp0 = 0;
+        //     tmp1 = 0;
+        //     for (int j = 0; j < m; j++) {
+        //         tmp0 += (estimatePrice(x[j], theta0, theta1) - y[j]);
+        //         tmp1 += (estimatePrice(x[j], theta0, theta1) - y[j]) * x[j];
+                
+        //     }
+        //     theta0 = (tmp0 * 3 / 10) / m;
+        //     theta1 = (tmp1 * 3 / 10) / m;
+        //     System.out.println(theta0+"    " + theta1);
+        // }
         System.out.println(theta0+"    "+theta1);
     }
 
@@ -96,8 +125,9 @@ public class Main {
                 fr.close();
                 String[] subStr;
                 subStr = b.split(" ");
-                theta0 = Integer.parseInt(subStr[0]);
-                theta1 = Integer.parseInt(subStr[1]);
+                theta0 = Integer.parseInt(subStr[0].trim());
+                theta1 = Integer.parseInt(subStr[1].trim());
+
             } catch (IOException ex) {
                 ex.printStackTrace();
                 System.out.println("Error");
@@ -132,11 +162,11 @@ public class Main {
         }
 
         if (programType.equals("p")) {
-            System.out.println("Enter the mileage please:");
+            System.out.print("Enter the mileage please: ");
             Scanner scan = new Scanner(System.in);
             String s = scan.nextLine();
             try {
-                System.out.println(estimatePrice(Integer.parseInt(s), theta0, theta1));
+                System.out.println("Estimate price: " + estimatePrice(Integer.parseInt(s), theta0, theta1));
             } catch (NumberFormatException e) {
                 System.out.println("Bad value");
                 System.exit(1);
