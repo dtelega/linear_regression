@@ -16,15 +16,15 @@ import java.util.stream.Stream;
 import java.util.Scanner;
 import java.lang.Object;
 
-// import org.apache.commons.math3.stat.regression.SimpleRegression;
+
 
 import static algo.Util.*;
 
 public class Main {
-    private static int theta0 = 0;
-    private static int theta1 = 0;
+    private static double theta0 = 0;
+    private static double theta1 = 0;
 
-    private static int estimatePrice(int mileage, int tmpTheta0, int tmpTheta1) {
+    private static double estimatePrice(double mileage, double tmpTheta0, double tmpTheta1) {
         return tmpTheta0 + (tmpTheta1 * mileage);
     }
 
@@ -68,25 +68,74 @@ need to div long int to double, because overflow
             ex.printStackTrace();
         }
    
-        int xSum = 0;
-        int ySum = 0;
-
-        long xSquared = 0;
-        int xY = 0;
+        double xSum = 0;
+        double ySum = 0;
+        double n = i;
+        double xSquared = 0;
+        double xY = 0;
         for (int j = 0; j < i; j++) {
             xSum += x[j];
             ySum += y[j];
             xSquared += x[j] * x[j];
-            System.out.println(xSquared);
             xY += x[j] * y[j];
         }
+        System.out.println(xSum);
+        System.out.println(ySum);
+        System.out.println(xSquared);
+        System.out.println(xY);
+        System.out.println("n= "+n);
 
-        long numerator = (i * xY - xSum * ySum);
-        System.out.println(" " + (i * xY - xSum * ySum));
-        System.out.println(i+" "+xY+" "+xSum+" "+ySum);
-        long slope = (i * xY - xSum * ySum) / (i * xSquared - xSum * xSum);
-        System.out.println((i * xSquared - xSum * xSum));
-        long intercept = (1 / i) * ySum - slope * (1 / i) * xSum;
+        double numerator = (n * xY - xSum * ySum);
+        System.out.println(numerator);
+        double slope = (n * xY - xSum * ySum) / (n * xSquared - xSum * xSum);
+        System.out.println(slope);
+        double intercept = ((double)(1 / n)) *ySum - (double)(slope*xSum) * ((double)1/n);
+        System.out.println(intercept);
+
+        theta0 = intercept;
+        theta1 = slope;
+
+        // BigDecimal xSum = BigDecimal.valueOf(0);
+        // BigDecimal ySum = BigDecimal.valueOf(0);
+        // BigDecimal xSquared = BigDecimal.valueOf(0);
+        // BigDecimal xY = BigDecimal.valueOf(0);
+
+        // for (int j = 0; j < i; j++) {
+        //     xSum = xSum.add(BigDecimal.valueOf(x[j]));
+        //     ySum = ySum.add(BigDecimal.valueOf(y[j]));
+        //     xSquared = xSquared.add(BigDecimal.valueOf(x[j]).multiply(BigDecimal.valueOf(y[j])));
+        //     xY = (BigDecimal.valueOf(x[j]).multiply(BigDecimal.valueOf(y[j]))).add(xY);
+        // }
+
+        // BigDecimal numerator = (BigDecimal.valueOf(i).multiply(xY).subtract(xSum.multiply(ySum)));
+        // System.out.println("numerator " + numerator);
+        // BigDecimal slope = ( (BigDecimal.valueOf(i).multiply(xY)).subtract(xSum.multiply(ySum)))
+        //             .divide(BigDecimal.valueOf(i).multiply(xSquared).subtract(xSum.multiply(ySum)) );
+        // // long slope = (i * xY - xSum * ySum) / (i * xSquared - xSum * xSum);
+        
+        // System.out.println("slope = "+slope);
+        
+        // // 1/i !!!!!!!!!!!!!!!
+        // BigDecimal intercept = (BigDecimal.valueOf((double)1/i).multiply(ySum)).subtract(slope.multiply(xSum.multiply(BigDecimal.valueOf((double)1/i))));
+        // // long intercept = (1 / i) * ySum - slope * (1 / i) * xSum;
+
+        // System.out.println("intersept = "+intercept);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
        // theta0 = slope;
        // theta1 = intercept;
@@ -114,12 +163,15 @@ need to div long int to double, because overflow
         //     theta1 = (tmp1 * 3 / 10) / m;
         //     System.out.println(theta0+"    " + theta1);
         // }
-        System.out.println(theta0+"    "+theta1);
+        // System.out.println(theta0+"    "+theta1);
     }
 
 
     public static void main(String[] args) {
         
+
+
+
         File thetasData = new File(".thetasData.txt");
         
         if (thetasData.exists()) {
@@ -131,8 +183,8 @@ need to div long int to double, because overflow
                 fr.close();
                 String[] subStr;
                 subStr = b.split(" ");
-                theta0 = Integer.parseInt(subStr[0].trim());
-                theta1 = Integer.parseInt(subStr[1].trim());
+                theta0 = Double.parseDouble(subStr[0].trim());
+                theta1 = Double.parseDouble(subStr[1].trim());
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -144,7 +196,7 @@ need to div long int to double, because overflow
         else {
             try {
                 FileWriter writer = new FileWriter(thetasData);
-                writer.write("0 0");
+                writer.write("0.0 0.0");
                 writer.close();
 
             } catch (IOException ex) {
@@ -172,7 +224,7 @@ need to div long int to double, because overflow
             Scanner scan = new Scanner(System.in);
             String s = scan.nextLine();
             try {
-                System.out.println("Estimate price: " + estimatePrice(Integer.parseInt(s), theta0, theta1));
+                System.out.println("Estimate price: " + estimatePrice(Double.parseDouble(s), theta0, theta1));
             } catch (NumberFormatException e) {
                 System.out.println("Bad value");
                 System.exit(1);
