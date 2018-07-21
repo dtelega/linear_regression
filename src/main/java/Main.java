@@ -16,6 +16,23 @@ import java.util.stream.Stream;
 import java.util.Scanner;
 import java.lang.Object;
 
+import static algo.Plot.*;
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+
 
 
 import static algo.Util.*;
@@ -43,7 +60,6 @@ public class Main {
         int tmp0;
         int tmp1;
         int i = 0;
-
 
 /*
 need to div long int to double, because overflow
@@ -94,6 +110,10 @@ need to div long int to double, because overflow
 
         theta0 = intercept;
         theta1 = slope;
+        if (Double.isNaN(theta0) || Double.isNaN(theta1)){
+            System.out.println("bad data");
+            System.exit(1);
+        }
 
         // BigDecimal xSum = BigDecimal.valueOf(0);
         // BigDecimal ySum = BigDecimal.valueOf(0);
@@ -170,7 +190,7 @@ need to div long int to double, because overflow
     public static void main(String[] args) {
         
 
-
+       // paint();
 
         File thetasData = new File(".thetasData.txt");
         
@@ -241,6 +261,5 @@ need to div long int to double, because overflow
                 ex.printStackTrace();
             }
         }
-
     }
 }
