@@ -184,6 +184,9 @@ need to div long int to double, because overflow
         //     System.out.println(theta0+"    " + theta1);
         // }
         // System.out.println(theta0+"    "+theta1);
+
+
+        paint(x, y,i, theta0, theta1);
     }
 
 

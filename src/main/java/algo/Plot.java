@@ -19,11 +19,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class Plot extends JFrame {
   private static final long serialVersionUID = 6294689542092367723L;
 
-  public Plot(String title) {
+  public Plot(String title, int x[], int y[], int len, double intersept, double slope) {
     super(title);
 
     // Create dataset
-    XYDataset dataset = createDataset();
+    XYDataset dataset = createDataset(x,y,len,intersept,slope);
 
     
     // Create chart
@@ -42,47 +42,30 @@ public class Plot extends JFrame {
     setContentPane(panel);
   }
 
-  private XYDataset createDataset() {
+  private XYDataset createDataset(int x[], int y[], int len, double intersept, double slope) {
     XYSeriesCollection dataset = new XYSeriesCollection();
 
     //Boys (Age,weight) series
     XYSeries series1 = new XYSeries("Boys");
-    series1.add(1, 72.9);
-    series1.add(2, 81.6);
-    series1.add(3, 88.9);
-    series1.add(4, 96);
-    series1.add(5, 102.1);
-    series1.add(6, 108.5);
-    series1.add(7, 113.9);
-    series1.add(8, 119.3);
-    series1.add(9, 123.8);
-    series1.add(10, 124.4);
-
-    dataset.addSeries(series1);
     
+    for (int i = 0; i < len; i++) {
+      series1.add(x[i], y[i]);
+    }
+    dataset.addSeries(series1);
+    /*
    //Girls (Age,weight) series
     XYSeries series2 = new XYSeries("Girls");
     series2.add(1, 72.5);
-    series2.add(2, 80.1);
-    series2.add(3, 87.2);
-    series2.add(4, 94.5);
-    series2.add(5, 101.4);
-    series2.add(6, 107.4);
-    series2.add(7, 112.8);
-    series2.add(8, 118.2);
-    series2.add(9, 122.9);
-    series2.add(10, 123.4);
-
     dataset.addSeries(series2);
-
+  */
     return dataset;
   }
 
-  public static void paint() {
+  public static void paint(int x[], int y[], int len, double intersept, double slope) {
 
     SwingUtilities.invokeLater(() -> {
       System.out.println("Hello");
-      Plot example = new Plot("Scatter Chart Example | BORAJI.COM");
+      Plot example = new Plot("Title", x, y, len, intersept, slope);
       example.setSize(800, 400);
       example.setLocationRelativeTo(null);
       example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
