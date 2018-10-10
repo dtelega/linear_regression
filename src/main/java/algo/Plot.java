@@ -1,6 +1,5 @@
 package algo;
 
-
 import java.awt.Color;
 
 import javax.swing.JFrame;
@@ -19,9 +18,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.AbstractXYItemRenderer;
 import org.jfree.chart.renderer.AbstractRenderer;
 
-public class Plot extends JFrame {
-  private static final long serialVersionUID = 6294689542092367723L;
 
+public class Plot extends JFrame {
   public Plot(String title, int x[], int y[], int len, double intersept, double slope) {
     super(title);
 
@@ -31,8 +29,8 @@ public class Plot extends JFrame {
     XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
     // Create chart
     JFreeChart chart = ChartFactory.createXYLineChart(
-        "Chart",
-        "price",
+        "linear regression",
+        "price, *1k",
         "km",
         dataset,
         PlotOrientation.HORIZONTAL,
@@ -46,14 +44,13 @@ public class Plot extends JFrame {
     XYPlot plot = (XYPlot)chart.getPlot();
     plot.setBackgroundPaint(new Color(255,228,196));
     
-   
     // Create Panel
     ChartPanel panel = new ChartPanel(chart);
     plot.setRenderer(renderer);
     setContentPane(panel);
   }
 
-  private XYDataset createDataset(int x[], int y[], int len, double intersept, double slope) {
+  private XYDataset createDataset(int x[], int y[], int len, double intercept, double slope) {
     XYSeriesCollection dataset = new XYSeriesCollection();
 
     //data series
@@ -64,19 +61,24 @@ public class Plot extends JFrame {
     }
     dataset.addSeries(series1);
 
+    // intercept = 0;
+    // slope = 2;
+    // System.out.println("y="+slope+"*x + "+intercept);
+
     // linear regression series
     XYSeries series2 = new XYSeries("graph");
 
-    series2.add(-10, (intersept + slope * (-10)));
-    series2.add(30, (intersept + slope * (30)));
+    
+    int max = 0;
+    for (int i = 0; i < x.length; i++) {
+      if (x[i]>max)
+        max = x[i];
+    }
+    System.out.println(max);
+    series2.add((slope * (0) + intercept), 0);
+    series2.add((slope * (max) + intercept), max);
     dataset.addSeries(series2);
 
-    /*
-   //Girls (Age,weight) series
-    XYSeries series2 = new XYSeries("Girls");
-    series2.add(1, 72.5);
-    dataset.addSeries(series2);
-  */
     return dataset;
   }
 

@@ -21,6 +21,12 @@ public class Trainer {
 need to div long int to double, because overflow
 */
         int m = findLengthFile(datasetPath);
+
+        if (m <= 2) {
+        	System.out.println("Shiit, find me");
+        	System.exit(1);
+        }
+
         int x [] = new int[m];
         int y [] = new int[m];
         try {
@@ -30,7 +36,7 @@ need to div long int to double, because overflow
             splitted = sc.nextLine().split(",");
             while(sc.hasNext()){
                 splitted = sc.nextLine().split(",");
-                x[i] = Integer.parseInt(splitted[0]);
+                x[i] = Math.round(Integer.parseInt(splitted[0]) / 1000);
                 y[i] = Integer.parseInt(splitted[1]);
                 i++;
             }
@@ -38,6 +44,7 @@ need to div long int to double, because overflow
             ex.printStackTrace();
         }
    
+
         double xSum = 0;
         double ySum = 0;
         double n = i;
@@ -49,18 +56,19 @@ need to div long int to double, because overflow
             xSquared += x[j] * x[j];
             xY += x[j] * y[j];
         }
-        System.out.println(xSum);
-        System.out.println(ySum);
-        System.out.println(xSquared);
-        System.out.println(xY);
-        System.out.println("n= "+n);
+        // System.out.println(xSum);
+        // System.out.println(ySum);
+        // System.out.println(xSquared);
+        // System.out.println(xY);
+        // System.out.println("n= "+n);
 
         double numerator = (n * xY - xSum * ySum);
-        System.out.println(numerator);
+        // System.out.println(numerator);
         double slope = (n * xY - xSum * ySum) / (n * xSquared - xSum * xSum);
-        System.out.println(slope);
+        
         double intercept = ((double)(1 / n)) *ySum - (double)(slope*xSum) * ((double)1/n);
-        System.out.println(intercept);
+        System.out.println("y="+slope+"*x + "+intercept);
+        // System.out.println(intercept);
 
         theta0 = intercept;
         theta1 = slope;
