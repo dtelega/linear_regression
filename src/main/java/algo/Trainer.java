@@ -56,28 +56,32 @@ need to div long int to double, because overflow
             xSquared += x[j] * x[j];
             xY += x[j] * y[j];
         }
-        // System.out.println(xSum);
-        // System.out.println(ySum);
-        // System.out.println(xSquared);
-        // System.out.println(xY);
-        // System.out.println("n= "+n);
 
         double numerator = (n * xY - xSum * ySum);
-        // System.out.println(numerator);
         double slope = (n * xY - xSum * ySum) / (n * xSquared - xSum * xSum);
         
         double intercept = ((double)(1 / n)) *ySum - (double)(slope*xSum) * ((double)1/n);
         System.out.println("y="+slope+"*x + "+intercept);
-        // System.out.println(intercept);
-
         theta0 = intercept;
         theta1 = slope;
         if (Double.isNaN(theta0) || Double.isNaN(theta1)){
             System.out.println("bad data");
             System.exit(1);
         }
+        try {
+            FileWriter writer = new FileWriter("thetasData.log");
+            writer.write(theta0 + " " + theta1);
+            writer.close();
 
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         paint(x, y,i, theta0, theta1);
+
+        
     }
+
+
+
 
 }

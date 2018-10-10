@@ -17,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
         
-        File thetasData = new File(".thetasData.txt");
+        File thetasData = new File("thetasData.log");
         
         if (thetasData.exists()) {
             try {
@@ -42,7 +42,7 @@ public class Main {
             try {
                 FileWriter writer = new FileWriter(thetasData);
                 writer.write("0.0 0.0");
-                writer.close();
+                // writer.close();
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -82,14 +82,7 @@ public class Main {
                 System.out.println("smth wrong with data file");
                 // ex.printStackTrace();
             }
-            try {
-                FileWriter writer = new FileWriter(thetasData);
-                writer.write(theta0 + " " + theta1);
-                writer.close();
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        
         }
     }
 }
