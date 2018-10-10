@@ -32,10 +32,10 @@ public class Plot extends JFrame {
     // Create chart
     JFreeChart chart = ChartFactory.createXYLineChart(
         "Chart",
-        "km",
         "price",
+        "km",
         dataset,
-        PlotOrientation.VERTICAL,
+        PlotOrientation.HORIZONTAL,
         true, true, false);
     renderer.setSeriesLinesVisible(0, false);
     renderer.setSeriesShapesVisible(0, true);

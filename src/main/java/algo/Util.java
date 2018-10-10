@@ -5,7 +5,21 @@ import org.apache.commons.cli.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import java.io.*;
+
 public class Util {
+
+    public static int findLengthFile(String datasetPath) {
+        int m = 0;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(datasetPath));
+            while (reader.readLine() != null) m++;
+            reader.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return m;
+    }
 
     public static Options parseArguments(final String[] args) {
         // program type
