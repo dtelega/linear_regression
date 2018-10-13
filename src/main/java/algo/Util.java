@@ -14,10 +14,12 @@ public class Util {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(datasetPath));
             while (reader.readLine() != null) m++;
-            reader.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+              reader.close();
+        } catch (Exception ex) {
+            System.out.println("No such file: "+datasetPath);
+            System.exit(1);
         }
+       
         return m;
     }
 
@@ -37,12 +39,16 @@ public class Util {
         return options;
     }
 
+    public static void usageMes() {
+        System.out.println("Usage:");
+        System.out.println("\t-p [p/t] [predict/trainer]");
+        System.out.println("\t-d ..pathToDataset/datasetFile (if trainer)");
+    }
+
     public static void validateArguments(final String programType, final String datasetFile) {
       if (programType == null && datasetFile == null) {
         // show info
-        System.out.println("Usage:");
-        System.out.println("\t-p [p/t] [predict/tra]");
-        System.out.println("\t-d ..pathToDataset/datasetFile (if tra)");
+        usageMes(); 
         
         System.exit(0);
 

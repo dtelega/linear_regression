@@ -30,7 +30,7 @@ public class Plot extends JFrame {
     // Create chart
     JFreeChart chart = ChartFactory.createXYLineChart(
         "linear regression",
-        "price, *1k",
+        "price",
         "km",
         dataset,
         PlotOrientation.HORIZONTAL,
@@ -74,7 +74,6 @@ public class Plot extends JFrame {
       if (x[i]>max)
         max = x[i];
     }
-    System.out.println(max);
     series2.add((slope * (0) + intercept), 0);
     series2.add((slope * (max) + intercept), max);
     dataset.addSeries(series2);
@@ -87,7 +86,6 @@ public class Plot extends JFrame {
   public static void paint(int x[], int y[], int len, double intersept, double slope) {
 
     SwingUtilities.invokeLater(() -> {
-      System.out.println("Hello");
       Plot example = new Plot("Title", x, y, len, intersept, slope);
       example.setSize(1600, 800);
       example.setLocationRelativeTo(null);

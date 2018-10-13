@@ -12,7 +12,11 @@ public class Main {
     private static double theta1 = 0;
 
     private static double estimatePrice(double mileage, double tmpTheta0, double tmpTheta1) {
-        return tmpTheta0 + (tmpTheta1 * mileage);
+        double price = tmpTheta0 + (tmpTheta1 * mileage);
+        if (price < 0 ) {
+            price = 0 ;
+        }
+        return price;
     }
 
     public static void main(String[] args) {
@@ -69,7 +73,16 @@ public class Main {
             Scanner scan = new Scanner(System.in);
             String s = scan.nextLine();
             try {
-                System.out.println("Estimate price: " + estimatePrice(Double.parseDouble(s), theta0, theta1));
+                if (Double.parseDouble(s) < 0 || Double.parseDouble(s) > 2147483647) {
+                    System.out.println("Bad value");
+                    System.exit(1);
+                }
+                System.out.print("Estimate price: ");
+                if (estimatePrice(Double.parseDouble(s), theta0, theta1) == 0) {
+                    System.out.println("trash :D (almost 0)");
+                } else {
+                    System.out.println(estimatePrice(Double.parseDouble(s), theta0, theta1));
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Bad value");
                 System.exit(1);
@@ -80,9 +93,11 @@ public class Main {
                 startTraining(datasetPath);
             } catch (Exception ex) {
                 System.out.println("smth wrong with data file");
-                // ex.printStackTrace();
+                ex.printStackTrace();
             }
         
+        } else {
+            usageMes();
         }
     }
 }
