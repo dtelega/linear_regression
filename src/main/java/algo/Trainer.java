@@ -23,8 +23,9 @@ public class Trainer {
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	    }
+
 		if (m <= 2) {
-			System.out.println("Shiit, length of file <= 2\n TODO: 2 dots yrovnenie");
+			System.out.println("Error: length of file < 2");
 			System.exit(1);
 		}
 
